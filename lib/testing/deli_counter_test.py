@@ -16,9 +16,9 @@ class TestDeliCounter:
         '''says the line is empty'''
         captured_out = io.StringIO()
         sys.stdout = captured_out
-        line(TestDeliCounter.KATZ_DELI)
+        result = line(TestDeliCounter.KATZ_DELI)
         sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "The line is currently empty.\n")
+        assert result == "The line is currently empty."
 
     def test_line_with_people(self):
         '''displays the current line'''
@@ -26,13 +26,16 @@ class TestDeliCounter:
         sys.stdout = captured_out
         line(TestDeliCounter.OTHER_DELI)
         sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "The line is currently: 1. Logan 2. Avi 3. Spencer\n")
+        expected_output = "The line is currently: 1. Logan 2. Avi 3. Spencer\n"
+        assert captured_out.getvalue() == expected_output
 
         captured_out = io.StringIO()
         sys.stdout = captured_out
         line(TestDeliCounter.ANOTHER_DELI)
         sys.stdout = sys.__stdout__
         assert(captured_out.getvalue() == "The line is currently: 1. Amanda 2. Annette 3. Ruchi 4. Jason 5. Logan 6. Spencer 7. Avi 8. Joe 9. Rachel 10. Lindsey\n")
+        
+
 
     def test_take_a_number_when_empty(self):
         '''adds a person to an empty line'''
@@ -40,8 +43,9 @@ class TestDeliCounter:
         sys.stdout = captured_out
         take_a_number(TestDeliCounter.KATZ_DELI, "Ada")
         sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "Welcome, Ada. You are number 1 in line.\n")
-        assert(TestDeliCounter.KATZ_DELI == ["Ada"])
+        expected_output = "Welcome, Ada. You are number 1 in line.\n"
+        assert captured_out.getvalue() == expected_output
+        assert TestDeliCounter.KATZ_DELI == ["Ada"]
         TestDeliCounter.KATZ_DELI.clear()
 
     def test_take_a_number_with_people_in_line(self):
